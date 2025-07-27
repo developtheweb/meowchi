@@ -29,6 +29,13 @@ A gamified desktop virtual pet that rewards productivity by tracking keyboard an
 - **Persistent Storage**: All stats, unlocks, and evolution preserved
 - **Data Recovery**: Automatic backup and corruption handling
 
+## 📥 Quick Install
+
+Download the latest release for your platform from the [Releases page](https://github.com/developtheweb/meowchi/releases):
+- **Windows**: Run the `.exe` installer
+- **macOS**: Open the `.dmg` and drag to Applications ([see installation guide for security warnings](docs/MAC_INSTALLATION.md))
+- **Linux**: Make the `.AppImage` executable and run
+
 ## 🚀 Getting Started
 
 ### Prerequisites
