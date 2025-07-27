@@ -23,6 +23,7 @@
   "license": "MIT",
   "type": "commonjs",
   "devDependencies": {
+    "canvas": "^3.1.2",
     "electron": "^37.2.4",
     "electron-builder": "^26.0.12"
   },
@@ -44,7 +45,7 @@
     ],
     "mac": {
       "category": "public.app-category.entertainment",
-      "icon": "assets/icon.svg",
+      "icon": "build/icon.png",
       "hardenedRuntime": true,
       "gatekeeperAssess": false,
       "entitlements": "build/entitlements.mac.plist",
@@ -52,11 +53,11 @@
     },
     "win": {
       "target": "nsis",
-      "icon": "assets/icon.svg"
+      "icon": "build/icon.png"
     },
     "linux": {
       "target": "AppImage",
-      "icon": "assets/icon.svg",
+      "icon": "build/icons",
       "category": "Game"
     },
     "nsis": {
