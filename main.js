@@ -58,7 +58,7 @@ function createWindow() {
 
   // Position window near taskbar (bottom right)
   const { width, height } = require('electron').screen.getPrimaryDisplay().workAreaSize;
-  mainWindow.setPosition(width - 200, height - 200);
+  mainWindow.setPosition(width - 450, height - 200);
 
   // Prevent window from being hidden
   mainWindow.setVisibleOnAllWorkspaces(true, { visibleOnFullScreen: true });
