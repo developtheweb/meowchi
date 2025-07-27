@@ -33,19 +33,31 @@ class InputTracker {
   setupHooks() {
     if (!this.uIOhook) return;
 
-    // Track keyboard events
+    // Debug: Log all events to see what's available
+    const debugMode = process.env.DEBUG_INPUT === 'true';
+    
+    // Track ALL keyboard events using keydown
     this.uIOhook.on('keydown', (e) => {
+      if (debugMode) console.log('Keydown event:', e);
       this.keyPressCount++;
       this.lastActivity = Date.now();
       this.sendUpdate();
     });
 
-    // Track mouse clicks
-    this.uIOhook.on('mousedown', (e) => {
+    // Track mouse clicks using the 'click' event
+    this.uIOhook.on('click', (e) => {
+      if (debugMode) console.log('Click event:', e);
       this.mouseClickCount++;
       this.lastActivity = Date.now();
       this.sendUpdate();
     });
+    
+    // Optional: Track all input events for debugging
+    if (debugMode) {
+      this.uIOhook.on('input', (e) => {
+        console.log('Input event:', e);
+      });
+    }
 
     // Handle IPC requests
     ipcMain.handle('get-input-stats', () => this.getStats());
