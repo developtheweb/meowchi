@@ -1,0 +1,10 @@
+# This file defines who is responsible for code in this repository.
+# These owners will be the default owners for everything in the repo.
+# They will be requested for review when someone opens a pull request.
+
+* @developtheweb
+
+# Specific components
+/logic/ @developtheweb
+/renderer/ @developtheweb
+/.github/ @developtheweb
