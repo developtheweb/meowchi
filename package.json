@@ -1,20 +1,61 @@
 {
   "name": "meowchi",
-  "version": "1.0.0",
-  "description": "",
+  "version": "0.1.0",
+  "description": "A gamified desktop virtual pet that rewards productivity",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "electron-builder",
+    "dist": "electron-builder --publish=never",
+    "dist:win": "electron-builder --win",
+    "dist:mac": "electron-builder --mac",
+    "dist:linux": "electron-builder --linux"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "keywords": ["virtual-pet", "productivity", "desktop-app", "electron"],
+  "author": "developtheweb",
+  "license": "MIT",
   "type": "commonjs",
   "devDependencies": {
-    "electron": "^37.2.4"
+    "electron": "^37.2.4",
+    "electron-builder": "^26.0.12"
   },
   "dependencies": {
+    "lowdb": "^6.1.1",
     "uiohook-napi": "^1.5.4"
+  },
+  "build": {
+    "appId": "com.developtheweb.meowchi",
+    "productName": "Meowchi",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "**/*",
+      "!**/*.ts",
+      "!*.md",
+      "!dist"
+    ],
+    "mac": {
+      "category": "public.app-category.entertainment",
+      "icon": "assets/icon.svg",
+      "hardenedRuntime": true,
+      "gatekeeperAssess": false,
+      "entitlements": "build/entitlements.mac.plist",
+      "entitlementsInherit": "build/entitlements.mac.plist"
+    },
+    "win": {
+      "target": "nsis",
+      "icon": "assets/icon.svg"
+    },
+    "linux": {
+      "target": "AppImage",
+      "icon": "assets/icon.svg",
+      "category": "Game"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
+    }
   }
 }

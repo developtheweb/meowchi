@@ -35,7 +35,14 @@ window.meowchiAPI = {
   getEvolutionJournal: () => ipcRenderer.invoke('get-evolution-journal'),
   onEvolutionTriggered: (callback) => {
     ipcRenderer.on('evolution-triggered', (event, data) => callback(data));
-  }
+  },
+  
+  // Save system methods
+  resetSave: () => ipcRenderer.invoke('reset-save'),
+  onSaveReset: (callback) => {
+    ipcRenderer.on('save-reset', () => callback());
+  },
+  saveGame: () => ipcRenderer.send('save-game')
 };
 
 console.log('Meowchi preload script loaded');

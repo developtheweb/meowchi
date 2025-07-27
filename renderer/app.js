@@ -533,3 +533,58 @@ async function initializeEvolution() {
 
 // Initialize evolution when page loads
 initializeEvolution();
+
+// Save System Integration
+const resetBtn = document.getElementById('reset-btn');
+
+// Handle reset button
+resetBtn.addEventListener('click', async () => {
+  const confirmed = confirm('Are you sure you want to reset Meowchi? This will delete all progress!');
+  
+  if (confirmed && window.meowchiAPI) {
+    const result = await window.meowchiAPI.resetSave();
+    if (result.success) {
+      showActionFeedback(result.message);
+      
+      // Reload the app after a delay
+      setTimeout(() => {
+        window.location.reload();
+      }, 2000);
+    }
+  }
+});
+
+// Listen for save reset events
+if (window.meowchiAPI) {
+  window.meowchiAPI.onSaveReset(() => {
+    window.location.reload();
+  });
+}
+
+// Save game on important actions
+function triggerSave() {
+  if (window.meowchiAPI) {
+    window.meowchiAPI.saveGame();
+  }
+}
+
+// Save after equipping hat
+const originalEquipHat = equipHat;
+equipHat = async function(hatId) {
+  await originalEquipHat(hatId);
+  triggerSave();
+};
+
+// Save after pet interactions
+const originalFeedBtn = feedBtn.addEventListener;
+feedBtn.addEventListener = function(event, handler) {
+  if (event === 'click') {
+    const wrappedHandler = async function() {
+      await handler.apply(this, arguments);
+      triggerSave();
+    };
+    originalFeedBtn.call(this, event, wrappedHandler);
+  } else {
+    originalFeedBtn.apply(this, arguments);
+  }
+};
