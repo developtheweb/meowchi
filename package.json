@@ -1,6 +1,6 @@
 {
   "name": "meowchi",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "A gamified desktop virtual pet that rewards productivity",
   "main": "main.js",
   "scripts": {
@@ -54,7 +54,10 @@
       "target": [
         {
           "target": "dmg",
-          "arch": ["x64", "arm64"]
+          "arch": [
+            "x64",
+            "arm64"
+          ]
         }
       ]
     },
