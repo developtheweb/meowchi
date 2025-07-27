@@ -26,6 +26,13 @@ document.addEventListener('click', (e) => {
   }
 });
 
+// Close button for pet panel
+const closePetPanelBtn = document.getElementById('close-pet-panel');
+closePetPanelBtn.addEventListener('click', () => {
+  petPanel.classList.add('hidden');
+  isPanelOpen = false;
+});
+
 // Add bounce animation to CSS dynamically
 const style = document.createElement('style');
 style.textContent = `

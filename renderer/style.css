@@ -241,6 +241,18 @@ html, body {
   flex: 1;
 }
 
+#close-pet-panel {
+  width: 100%;
+  margin-top: 12px;
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+#close-pet-panel:hover {
+  background: rgba(255, 107, 107, 0.2);
+  border-color: #ff6b6b;
+}
+
 /* Inventory Panel */
 #inventory-panel {
   position: absolute;
