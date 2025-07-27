@@ -118,6 +118,11 @@ class PetState {
       global.hatManager.updateProgress('feeds', 1);
     }
     
+    // Track interaction for evolution
+    if (global.evolutionManager) {
+      global.evolutionManager.trackInteraction('feed');
+    }
+    
     return {
       success: true,
       message: 'Yum! That was delicious! 😋',
@@ -135,6 +140,11 @@ class PetState {
     // Update hat progress
     if (global.hatManager) {
       global.hatManager.updateProgress('cleans', 1);
+    }
+    
+    // Track interaction for evolution
+    if (global.evolutionManager) {
+      global.evolutionManager.trackInteraction('clean');
     }
     
     return {
@@ -156,6 +166,11 @@ class PetState {
     // Update hat progress
     if (global.hatManager) {
       global.hatManager.updateProgress('plays', 1);
+    }
+    
+    // Track interaction for evolution
+    if (global.evolutionManager) {
+      global.evolutionManager.trackInteraction('play');
     }
     
     return {
@@ -224,6 +239,15 @@ class PetState {
     windows.forEach(window => {
       window.webContents.send('pet-state-update', state);
     });
+    
+    // Update evolution manager with care stats
+    if (global.evolutionManager) {
+      global.evolutionManager.updateCareStats({
+        hunger: this.hunger,
+        cleanliness: this.cleanliness,
+        mood: this.mood
+      });
+    }
   }
 }
 

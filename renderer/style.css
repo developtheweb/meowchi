@@ -231,8 +231,14 @@ html, body {
   margin: 12px 0 8px 0;
 }
 
-.inventory-toggle {
+.panel-buttons {
+  display: flex;
+  gap: 8px;
   width: 100%;
+}
+
+.panel-buttons .action-btn {
+  flex: 1;
 }
 
 /* Inventory Panel */
@@ -393,4 +399,198 @@ html, body {
   background: #ffd93d;
   border-radius: 50%;
   animation: sparkle 1s ease-out;
+}
+
+/* Evolution Journal Panel */
+#journal-panel {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(20, 20, 20, 0.95);
+  color: white;
+  padding: 20px;
+  border-radius: 12px;
+  min-width: 300px;
+  max-width: 400px;
+  max-height: 80%;
+  overflow-y: auto;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-size: 12px;
+  -webkit-app-region: no-drag;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0.9);
+  transition: all 0.3s ease;
+}
+
+#journal-panel:not(.hidden) {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.journal-title {
+  margin: 0 0 16px 0;
+  text-align: center;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.evolution-display {
+  text-align: center;
+  padding: 16px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  margin-bottom: 16px;
+}
+
+.evolution-form {
+  font-size: 64px;
+  margin-bottom: 8px;
+}
+
+.evolution-name {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.evolution-tier {
+  font-size: 12px;
+  opacity: 0.8;
+  margin-bottom: 8px;
+}
+
+.evolution-description {
+  font-style: italic;
+  opacity: 0.9;
+}
+
+.evolution-progress {
+  margin-bottom: 16px;
+}
+
+.evolution-requirement {
+  margin-bottom: 12px;
+}
+
+.requirement-label {
+  font-size: 11px;
+  margin-bottom: 4px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.evolution-history {
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.history-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 6px;
+  margin-bottom: 8px;
+}
+
+.history-emoji {
+  font-size: 32px;
+}
+
+.history-info {
+  flex: 1;
+}
+
+.history-name {
+  font-weight: 600;
+  margin-bottom: 2px;
+}
+
+.history-date {
+  font-size: 10px;
+  opacity: 0.7;
+}
+
+/* Evolution Dialog */
+#evolution-dialog {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.9);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+#evolution-dialog:not(.hidden) {
+  opacity: 1;
+}
+
+.evolution-content {
+  background: rgba(20, 20, 20, 0.95);
+  padding: 32px;
+  border-radius: 16px;
+  text-align: center;
+  max-width: 400px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+#evolution-title {
+  margin: 0 0 24px 0;
+  font-size: 24px;
+  color: #ffd93d;
+}
+
+.evolution-animation {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  margin-bottom: 24px;
+}
+
+.evolution-sprite {
+  font-size: 64px;
+  animation: evolutionPulse 2s ease-in-out infinite;
+}
+
+@keyframes evolutionPulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.2); opacity: 0.8; }
+}
+
+.evolution-arrow {
+  font-size: 32px;
+  color: #ffd93d;
+  animation: arrowSlide 1s ease-in-out infinite;
+}
+
+@keyframes arrowSlide {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(10px); }
+}
+
+#evolution-message {
+  font-size: 14px;
+  margin-bottom: 24px;
+  opacity: 0.9;
+}
+
+#close-evolution {
+  background: rgba(255, 217, 61, 0.2);
+  border-color: #ffd93d;
+  color: #ffd93d;
+}
+
+#close-evolution:hover {
+  background: rgba(255, 217, 61, 0.3);
 }

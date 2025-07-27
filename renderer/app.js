@@ -358,3 +358,178 @@ async function initializeInventory() {
 
 // Initialize inventory when page loads
 initializeInventory();
+
+// Evolution System Integration
+const journalBtn = document.getElementById('journal-btn');
+const journalPanel = document.getElementById('journal-panel');
+const closeJournalBtn = document.getElementById('close-journal');
+const currentEvolutionDiv = document.getElementById('current-evolution');
+const evolutionProgressDiv = document.getElementById('evolution-progress');
+const evolutionHistoryDiv = document.getElementById('evolution-history');
+const evolutionDialog = document.getElementById('evolution-dialog');
+const closeEvolutionBtn = document.getElementById('close-evolution');
+
+let isJournalOpen = false;
+let currentEvolutionState = null;
+
+// Toggle journal panel
+journalBtn.addEventListener('click', () => {
+  isJournalOpen = !isJournalOpen;
+  if (isJournalOpen) {
+    journalPanel.classList.remove('hidden');
+    petPanel.classList.add('hidden');
+    inventoryPanel.classList.add('hidden');
+    isPanelOpen = false;
+    isInventoryOpen = false;
+    updateJournal();
+  } else {
+    journalPanel.classList.add('hidden');
+  }
+});
+
+closeJournalBtn.addEventListener('click', () => {
+  journalPanel.classList.add('hidden');
+  isJournalOpen = false;
+});
+
+// Close evolution dialog
+closeEvolutionBtn.addEventListener('click', () => {
+  evolutionDialog.classList.add('hidden');
+});
+
+// Update close panels logic
+document.addEventListener('click', (e) => {
+  const clickedElements = [meowchiSprite, petPanel, inventoryPanel, journalPanel, inventoryBtn, journalBtn];
+  const clickedInside = clickedElements.some(el => el.contains(e.target));
+  
+  if (!clickedInside) {
+    petPanel.classList.add('hidden');
+    inventoryPanel.classList.add('hidden');
+    journalPanel.classList.add('hidden');
+    isPanelOpen = false;
+    isInventoryOpen = false;
+    isJournalOpen = false;
+  }
+});
+
+// Update journal content
+async function updateJournal() {
+  if (window.meowchiAPI) {
+    const state = await window.meowchiAPI.getEvolutionState();
+    const journal = await window.meowchiAPI.getEvolutionJournal();
+    
+    // Update current evolution display
+    currentEvolutionDiv.innerHTML = `
+      <div class="evolution-form">${state.current.emoji}</div>
+      <div class="evolution-name">${state.current.name}</div>
+      <div class="evolution-tier">Tier ${state.current.tier}</div>
+      <div class="evolution-description">${state.current.description}</div>
+    `;
+    
+    // Update evolution progress
+    evolutionProgressDiv.innerHTML = '';
+    if (state.possibleEvolutions && state.possibleEvolutions.length > 0) {
+      evolutionProgressDiv.innerHTML = '<h4>Next Evolutions:</h4>';
+      
+      state.possibleEvolutions.forEach(evo => {
+        let progressHtml = '';
+        
+        if (evo.progress) {
+          Object.entries(evo.progress).forEach(([key, prog]) => {
+            const percentage = Math.round(prog.percentage);
+            const label = key.charAt(0).toUpperCase() + key.slice(1);
+            const value = formatProgressValue(key, prog);
+            
+            progressHtml += `
+              <div class="evolution-requirement">
+                <div class="requirement-label">
+                  <span>${label}</span>
+                  <span>${value}</span>
+                </div>
+                <div class="progress-bar">
+                  <div class="progress-fill" style="width: ${percentage}%"></div>
+                </div>
+              </div>
+            `;
+          });
+        }
+        
+        evolutionProgressDiv.innerHTML += `
+          <div class="evolution-candidate">
+            <h5>${evo.emoji} ${evo.name}</h5>
+            ${progressHtml}
+          </div>
+        `;
+      });
+    }
+    
+    // Update evolution history
+    evolutionHistoryDiv.innerHTML = '<h4>Evolution History:</h4>';
+    journal.history.forEach((form, index) => {
+      const date = index === 0 ? 'Original Form' : new Date().toLocaleDateString();
+      evolutionHistoryDiv.innerHTML += `
+        <div class="history-item">
+          <div class="history-emoji">${form.emoji}</div>
+          <div class="history-info">
+            <div class="history-name">${form.name}</div>
+            <div class="history-date">${date}</div>
+          </div>
+        </div>
+      `;
+    });
+  }
+}
+
+// Format progress values
+function formatProgressValue(type, progress) {
+  if (type === 'playtime') {
+    const hours = Math.floor(progress.current / 3600000);
+    const reqHours = Math.floor(progress.required / 3600000);
+    return `${hours}h / ${reqHours}h`;
+  }
+  return `${progress.current} / ${progress.required}`;
+}
+
+// Handle evolution trigger
+function showEvolutionDialog(data) {
+  const oldFormDiv = document.getElementById('old-form');
+  const newFormDiv = document.getElementById('new-form');
+  const messageDiv = document.getElementById('evolution-message');
+  
+  oldFormDiv.textContent = data.oldForm.emoji;
+  newFormDiv.textContent = data.newForm.emoji;
+  messageDiv.textContent = data.message;
+  
+  evolutionDialog.classList.remove('hidden');
+  
+  // Update Meowchi sprite immediately
+  meowchiSprite.textContent = data.newForm.emoji;
+  currentEvolutionState = data.newForm;
+  
+  // Add extra sparkles
+  for (let i = 0; i < 3; i++) {
+    setTimeout(() => addSparkleEffect(meowchiSprite), i * 500);
+  }
+}
+
+// Initialize evolution system
+async function initializeEvolution() {
+  if (window.meowchiAPI) {
+    // Get initial state
+    const state = await window.meowchiAPI.getEvolutionState();
+    currentEvolutionState = state.current;
+    
+    // Update sprite if evolved
+    if (state.current.id !== 'base') {
+      meowchiSprite.textContent = state.current.emoji;
+    }
+    
+    // Listen for evolution events
+    window.meowchiAPI.onEvolutionTriggered((data) => {
+      showEvolutionDialog(data);
+    });
+  }
+}
+
+// Initialize evolution when page loads
+initializeEvolution();

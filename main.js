@@ -3,11 +3,13 @@ const path = require('path');
 const InputTracker = require('./logic/inputTracker');
 const PetState = require('./logic/petState');
 const HatManager = require('./logic/hatManager');
+const EvolutionManager = require('./logic/evolutionManager');
 
 let mainWindow;
 let inputTracker;
 let petState;
 let hatManager;
+let evolutionManager;
 
 function createWindow() {
   // Create the browser window with specific properties for floating pet
@@ -66,6 +68,11 @@ app.whenReady().then(async () => {
   global.hatManager = hatManager; // Make it globally accessible
   console.log('Meowchi hat system active!');
   
+  // Initialize evolution manager
+  evolutionManager = new EvolutionManager();
+  global.evolutionManager = evolutionManager; // Make it globally accessible
+  console.log('Meowchi evolution system active!');
+  
   // Initialize input tracker
   inputTracker = new InputTracker();
   const initialized = await inputTracker.initialize();
@@ -86,6 +93,9 @@ app.on('window-all-closed', () => {
     }
     if (petState) {
       petState.stop();
+    }
+    if (evolutionManager) {
+      evolutionManager.stopTracking();
     }
     app.quit();
   }

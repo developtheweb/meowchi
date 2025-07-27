@@ -64,7 +64,10 @@
       
       <div class="panel-divider"></div>
       
-      <button id="inventory-btn" class="action-btn inventory-toggle">🎩 Hats</button>
+      <div class="panel-buttons">
+        <button id="inventory-btn" class="action-btn">🎩 Hats</button>
+        <button id="journal-btn" class="action-btn">📖 Journal</button>
+      </div>
     </div>
     
     <!-- Inventory Panel -->
@@ -74,6 +77,37 @@
         <!-- Hat items will be dynamically added here -->
       </div>
       <button id="close-inventory" class="action-btn">✖️ Close</button>
+    </div>
+    
+    <!-- Evolution Journal Panel -->
+    <div id="journal-panel" class="hidden">
+      <h3 class="journal-title">📖 Evolution Journal</h3>
+      <div id="current-evolution" class="evolution-display">
+        <!-- Current evolution info -->
+      </div>
+      <div class="panel-divider"></div>
+      <div id="evolution-progress" class="evolution-progress">
+        <!-- Evolution progress bars -->
+      </div>
+      <div class="panel-divider"></div>
+      <div id="evolution-history" class="evolution-history">
+        <!-- Evolution history -->
+      </div>
+      <button id="close-journal" class="action-btn">✖️ Close</button>
+    </div>
+    
+    <!-- Evolution Dialog -->
+    <div id="evolution-dialog" class="hidden">
+      <div class="evolution-content">
+        <h2 id="evolution-title">Meowchi is evolving!</h2>
+        <div class="evolution-animation">
+          <div id="old-form" class="evolution-sprite"></div>
+          <div class="evolution-arrow">➜</div>
+          <div id="new-form" class="evolution-sprite"></div>
+        </div>
+        <p id="evolution-message"></p>
+        <button id="close-evolution" class="action-btn">✨ Amazing!</button>
+      </div>
     </div>
   </div>
   <script src="app.js"></script>

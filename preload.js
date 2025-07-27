@@ -28,6 +28,13 @@ window.meowchiAPI = {
   },
   onHatUnlocked: (callback) => {
     ipcRenderer.on('hat-unlocked', (event, data) => callback(data));
+  },
+  
+  // Evolution methods
+  getEvolutionState: () => ipcRenderer.invoke('get-evolution-state'),
+  getEvolutionJournal: () => ipcRenderer.invoke('get-evolution-journal'),
+  onEvolutionTriggered: (callback) => {
+    ipcRenderer.on('evolution-triggered', (event, data) => callback(data));
   }
 };
 
