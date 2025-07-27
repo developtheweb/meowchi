@@ -1,6 +1,6 @@
 {
   "name": "meowchi",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A gamified desktop virtual pet that rewards productivity",
   "main": "main.js",
   "scripts": {
@@ -13,7 +13,12 @@
     "dist:mac": "electron-builder --mac",
     "dist:linux": "electron-builder --linux"
   },
-  "keywords": ["virtual-pet", "productivity", "desktop-app", "electron"],
+  "keywords": [
+    "virtual-pet",
+    "productivity",
+    "desktop-app",
+    "electron"
+  ],
   "author": "developtheweb",
   "license": "MIT",
   "type": "commonjs",
