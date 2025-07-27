@@ -9,6 +9,7 @@
     "build": "electron-builder",
     "dist": "electron-builder --publish=never",
     "postinstall": "electron-builder install-app-deps",
+    "rebuild": "electron-rebuild -f -w uiohook-napi",
     "dist:win": "electron-builder --win",
     "dist:mac": "electron-builder --mac",
     "dist:linux": "electron-builder --linux"

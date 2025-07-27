@@ -32,9 +32,9 @@ A gamified desktop virtual pet that rewards productivity by tracking keyboard an
 ## 📥 Quick Install
 
 Download the latest release for your platform from the [Releases page](https://github.com/developtheweb/meowchi/releases):
-- **Windows**: Run the `.exe` installer
-- **macOS**: Open the `.dmg` and drag to Applications ([see installation guide for security warnings](docs/MAC_INSTALLATION.md))
-- **Linux**: Make the `.AppImage` executable and run
+- **Windows**: Run the `.exe` installer ([installation guide](docs/WINDOWS_INSTALLATION.md))
+- **macOS**: Open the `.dmg` and drag to Applications ([installation guide](docs/MAC_INSTALLATION.md))
+- **Linux**: Make the `.AppImage` executable and run ([installation guide](docs/LINUX_INSTALLATION.md))
 
 ## 🚀 Getting Started
 
