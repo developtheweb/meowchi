@@ -22,12 +22,28 @@ html, body {
   position: relative;
 }
 
+#meowchi-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
 #meowchi-sprite {
   font-size: 80px;
   cursor: pointer;
   -webkit-app-region: no-drag; /* Allow clicking on the sprite */
   animation: float 3s ease-in-out infinite;
   filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.3));
+}
+
+#meowchi-hat {
+  position: absolute;
+  top: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 40px;
+  pointer-events: none;
+  animation: float 3s ease-in-out infinite;
+  z-index: 10;
 }
 
 /* Simple floating animation */
@@ -206,4 +222,175 @@ html, body {
 
 .hidden {
   display: none !important;
+}
+
+.panel-divider {
+  width: 100%;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.2);
+  margin: 12px 0 8px 0;
+}
+
+.inventory-toggle {
+  width: 100%;
+}
+
+/* Inventory Panel */
+#inventory-panel {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(20, 20, 20, 0.95);
+  color: white;
+  padding: 20px;
+  border-radius: 12px;
+  min-width: 280px;
+  max-width: 400px;
+  max-height: 80%;
+  overflow-y: auto;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-size: 12px;
+  -webkit-app-region: no-drag;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0.9);
+  transition: all 0.3s ease;
+}
+
+#inventory-panel:not(.hidden) {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.inventory-title {
+  margin: 0 0 16px 0;
+  text-align: center;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.inventory-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.hat-item {
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  padding: 12px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+.hat-item.locked {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.hat-item.equipped {
+  border-color: #ffd93d;
+  background: rgba(255, 217, 61, 0.2);
+}
+
+.hat-item:hover:not(.locked) {
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+}
+
+.hat-icon {
+  font-size: 32px;
+  margin-bottom: 4px;
+  display: block;
+}
+
+.hat-name {
+  font-size: 11px;
+  font-weight: 600;
+  margin-bottom: 2px;
+}
+
+.hat-rarity {
+  font-size: 9px;
+  text-transform: uppercase;
+  opacity: 0.8;
+}
+
+.rarity-common {
+  color: #b0b0b0;
+}
+
+.rarity-rare {
+  color: #4ecdc4;
+}
+
+.rarity-epic {
+  color: #a78bfa;
+}
+
+.unlock-progress {
+  margin-top: 6px;
+  font-size: 9px;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 2px;
+  overflow: hidden;
+  margin-top: 4px;
+}
+
+.progress-fill {
+  height: 100%;
+  background: #4ecdc4;
+  transition: width 0.3s ease;
+}
+
+.equipped-badge {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  background: #ffd93d;
+  color: #000;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 9px;
+  font-weight: bold;
+}
+
+#close-inventory {
+  width: 100%;
+  margin-top: 8px;
+}
+
+/* Hat unlock animation */
+@keyframes sparkle {
+  0% { transform: scale(0) rotate(0deg); opacity: 0; }
+  50% { transform: scale(1) rotate(180deg); opacity: 1; }
+  100% { transform: scale(0) rotate(360deg); opacity: 0; }
+}
+
+.sparkle-effect {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.sparkle {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: #ffd93d;
+  border-radius: 50%;
+  animation: sparkle 1s ease-out;
 }

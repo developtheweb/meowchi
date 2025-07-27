@@ -113,6 +113,11 @@ class PetState {
     this.mood = Math.min(100, this.mood + 5); // Feeding improves mood
     this.sendUpdate();
     
+    // Update hat progress
+    if (global.hatManager) {
+      global.hatManager.updateProgress('feeds', 1);
+    }
+    
     return {
       success: true,
       message: 'Yum! That was delicious! 😋',
@@ -126,6 +131,11 @@ class PetState {
     this.lastCleaned = Date.now();
     this.mood = Math.min(100, this.mood + 3); // Cleaning improves mood slightly
     this.sendUpdate();
+    
+    // Update hat progress
+    if (global.hatManager) {
+      global.hatManager.updateProgress('cleans', 1);
+    }
     
     return {
       success: true,
@@ -142,6 +152,11 @@ class PetState {
     this.hunger = Math.max(0, this.hunger - 3);
     this.cleanliness = Math.max(0, this.cleanliness - 5);
     this.sendUpdate();
+    
+    // Update hat progress
+    if (global.hatManager) {
+      global.hatManager.updateProgress('plays', 1);
+    }
     
     return {
       success: true,

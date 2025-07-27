@@ -203,3 +203,158 @@ async function initializePetState() {
 
 // Initialize pet state when page loads
 initializePetState();
+
+// Inventory System Integration
+const inventoryBtn = document.getElementById('inventory-btn');
+const inventoryPanel = document.getElementById('inventory-panel');
+const closeInventoryBtn = document.getElementById('close-inventory');
+const inventoryGrid = document.getElementById('inventory-grid');
+const meowchiHat = document.getElementById('meowchi-hat');
+
+let isInventoryOpen = false;
+let currentInventory = null;
+
+// Toggle inventory panel
+inventoryBtn.addEventListener('click', () => {
+  isInventoryOpen = !isInventoryOpen;
+  if (isInventoryOpen) {
+    inventoryPanel.classList.remove('hidden');
+    petPanel.classList.add('hidden');
+    isPanelOpen = false;
+  } else {
+    inventoryPanel.classList.add('hidden');
+  }
+});
+
+closeInventoryBtn.addEventListener('click', () => {
+  inventoryPanel.classList.add('hidden');
+  isInventoryOpen = false;
+});
+
+// Close panels when clicking outside
+document.addEventListener('click', (e) => {
+  const clickedElements = [meowchiSprite, petPanel, inventoryPanel, inventoryBtn];
+  const clickedInside = clickedElements.some(el => el.contains(e.target));
+  
+  if (!clickedInside) {
+    petPanel.classList.add('hidden');
+    inventoryPanel.classList.add('hidden');
+    isPanelOpen = false;
+    isInventoryOpen = false;
+  }
+});
+
+// Render inventory items
+function renderInventory(inventory) {
+  if (!inventory) return;
+  
+  currentInventory = inventory;
+  inventoryGrid.innerHTML = '';
+  
+  inventory.hats.forEach(hat => {
+    const hatElement = document.createElement('div');
+    hatElement.className = `hat-item ${hat.unlocked ? '' : 'locked'} ${hat.equipped ? 'equipped' : ''} rarity-${hat.rarity}`;
+    
+    let progressHtml = '';
+    if (!hat.unlocked && hat.progress) {
+      progressHtml = `
+        <div class="unlock-progress">
+          ${hat.progress.current}/${hat.progress.required}
+          <div class="progress-bar">
+            <div class="progress-fill" style="width: ${hat.progress.percentage}%"></div>
+          </div>
+        </div>
+      `;
+    }
+    
+    hatElement.innerHTML = `
+      <span class="hat-icon">${hat.emoji || '🎩'}</span>
+      <div class="hat-name">${hat.name}</div>
+      <div class="hat-rarity rarity-${hat.rarity}">${hat.rarity}</div>
+      ${hat.equipped ? '<div class="equipped-badge">EQUIPPED</div>' : ''}
+      ${progressHtml}
+    `;
+    
+    if (hat.unlocked) {
+      hatElement.addEventListener('click', () => equipHat(hat.id));
+    }
+    
+    inventoryGrid.appendChild(hatElement);
+  });
+}
+
+// Equip a hat
+async function equipHat(hatId) {
+  if (window.meowchiAPI) {
+    const result = await window.meowchiAPI.equipHat(hatId);
+    if (result.success) {
+      showActionFeedback(result.message);
+      
+      // Add equip animation
+      addSparkleEffect(meowchiSprite);
+    }
+  }
+}
+
+// Update displayed hat
+function updateDisplayedHat(hat) {
+  if (hat && hat.emoji) {
+    meowchiHat.textContent = hat.emoji;
+    meowchiHat.style.display = 'block';
+  } else {
+    meowchiHat.textContent = '';
+    meowchiHat.style.display = 'none';
+  }
+}
+
+// Add sparkle effect for hat changes
+function addSparkleEffect(element) {
+  const sparkleContainer = document.createElement('div');
+  sparkleContainer.className = 'sparkle-effect';
+  
+  for (let i = 0; i < 8; i++) {
+    const sparkle = document.createElement('div');
+    sparkle.className = 'sparkle';
+    sparkle.style.left = `${Math.random() * 100}%`;
+    sparkle.style.top = `${Math.random() * 100}%`;
+    sparkle.style.animationDelay = `${Math.random() * 0.5}s`;
+    sparkleContainer.appendChild(sparkle);
+  }
+  
+  element.appendChild(sparkleContainer);
+  setTimeout(() => sparkleContainer.remove(), 1000);
+}
+
+// Initialize inventory
+async function initializeInventory() {
+  if (window.meowchiAPI) {
+    // Get initial inventory
+    const inventory = await window.meowchiAPI.getInventory();
+    renderInventory(inventory);
+    
+    // Get equipped hat
+    const equippedHat = await window.meowchiAPI.getEquippedHat();
+    updateDisplayedHat(equippedHat);
+    
+    // Listen for inventory updates
+    window.meowchiAPI.onInventoryUpdate((inventory) => {
+      renderInventory(inventory);
+      const equipped = inventory.hats.find(h => h.equipped);
+      updateDisplayedHat(equipped);
+    });
+    
+    // Listen for hat unlocks
+    window.meowchiAPI.onHatUnlocked((data) => {
+      statusText.textContent = data.message;
+      petStatus.classList.remove('hidden');
+      addSparkleEffect(meowchiSprite);
+      
+      setTimeout(() => {
+        petStatus.classList.add('hidden');
+      }, 4000);
+    });
+  }
+}
+
+// Initialize inventory when page loads
+initializeInventory();

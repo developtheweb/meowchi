@@ -8,7 +8,10 @@
 </head>
 <body>
   <div id="meowchi-container">
-    <div id="meowchi-sprite">🐱</div>
+    <div id="meowchi-wrapper">
+      <div id="meowchi-hat"></div>
+      <div id="meowchi-sprite">🐱</div>
+    </div>
     
     <!-- Pet Status Indicator -->
     <div id="pet-status" class="hidden">
@@ -58,6 +61,19 @@
         <button id="clean-btn" class="action-btn">🧼 Clean</button>
         <button id="play-btn" class="action-btn">🎮 Play</button>
       </div>
+      
+      <div class="panel-divider"></div>
+      
+      <button id="inventory-btn" class="action-btn inventory-toggle">🎩 Hats</button>
+    </div>
+    
+    <!-- Inventory Panel -->
+    <div id="inventory-panel" class="hidden">
+      <h3 class="inventory-title">🎩 Hat Collection</h3>
+      <div id="inventory-grid" class="inventory-grid">
+        <!-- Hat items will be dynamically added here -->
+      </div>
+      <button id="close-inventory" class="action-btn">✖️ Close</button>
     </div>
   </div>
   <script src="app.js"></script>

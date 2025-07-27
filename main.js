@@ -2,10 +2,12 @@ const { app, BrowserWindow, ipcMain } = require('electron');
 const path = require('path');
 const InputTracker = require('./logic/inputTracker');
 const PetState = require('./logic/petState');
+const HatManager = require('./logic/hatManager');
 
 let mainWindow;
 let inputTracker;
 let petState;
+let hatManager;
 
 function createWindow() {
   // Create the browser window with specific properties for floating pet
@@ -58,6 +60,11 @@ app.whenReady().then(async () => {
   global.petState = petState; // Make it globally accessible
   petState.start();
   console.log('Meowchi pet state system active!');
+  
+  // Initialize hat manager
+  hatManager = new HatManager();
+  global.hatManager = hatManager; // Make it globally accessible
+  console.log('Meowchi hat system active!');
   
   // Initialize input tracker
   inputTracker = new InputTracker();

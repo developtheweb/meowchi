@@ -17,6 +17,17 @@ window.meowchiAPI = {
   playWithMeowchi: () => ipcRenderer.invoke('play-with-meowchi'),
   onPetStateUpdate: (callback) => {
     ipcRenderer.on('pet-state-update', (event, state) => callback(state));
+  },
+  
+  // Hat/Inventory methods
+  getInventory: () => ipcRenderer.invoke('get-inventory'),
+  equipHat: (hatId) => ipcRenderer.invoke('equip-hat', hatId),
+  getEquippedHat: () => ipcRenderer.invoke('get-equipped-hat'),
+  onInventoryUpdate: (callback) => {
+    ipcRenderer.on('inventory-update', (event, inventory) => callback(inventory));
+  },
+  onHatUnlocked: (callback) => {
+    ipcRenderer.on('hat-unlocked', (event, data) => callback(data));
   }
 };
 

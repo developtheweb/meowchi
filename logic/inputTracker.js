@@ -119,6 +119,11 @@ class InputTracker {
     if (global.petState) {
       global.petState.onActivity();
     }
+    
+    // Update hat manager progress
+    if (global.hatManager) {
+      global.hatManager.updateProgress('inputs', 1);
+    }
   }
 
   reset() {
