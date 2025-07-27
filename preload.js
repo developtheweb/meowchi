@@ -1,5 +1,13 @@
 // Preload script for Electron
-// This runs before the renderer process loads
-// Currently empty but will be used for secure context bridging in future phases
+const { ipcRenderer } = require('electron');
+
+// Expose protected methods that allow the renderer process to use ipcRenderer
+window.meowchiAPI = {
+  getInputStats: () => ipcRenderer.invoke('get-input-stats'),
+  getTrackerStatus: () => ipcRenderer.invoke('input-tracker-status'),
+  onInputStatsUpdate: (callback) => {
+    ipcRenderer.on('input-stats-update', (event, stats) => callback(stats));
+  }
+};
 
 console.log('Meowchi preload script loaded');

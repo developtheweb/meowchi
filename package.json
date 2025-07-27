@@ -13,5 +13,8 @@
   "type": "commonjs",
   "devDependencies": {
     "electron": "^37.2.4"
+  },
+  "dependencies": {
+    "uiohook-napi": "^1.5.4"
   }
 }

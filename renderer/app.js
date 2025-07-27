@@ -31,3 +31,61 @@ document.head.appendChild(style);
 
 // Log that Meowchi is ready
 console.log('Meowchi is ready to play! 🐱');
+
+// Input tracking integration
+const keypressCountEl = document.getElementById('keypress-count');
+const clickCountEl = document.getElementById('click-count');
+
+// Check if input tracking is available
+async function checkInputTracking() {
+  if (window.meowchiAPI) {
+    const status = await window.meowchiAPI.getTrackerStatus();
+    
+    if (!status.supported) {
+      console.warn('Input tracking not supported on this platform');
+      // Show a warning in the stats overlay
+      document.getElementById('stats-overlay').innerHTML = 
+        '<div style="color: #ff9999;">Input tracking unavailable</div>';
+      return false;
+    }
+    
+    return true;
+  }
+  return false;
+}
+
+// Update stats display
+function updateStats(stats) {
+  if (stats) {
+    keypressCountEl.textContent = stats.keyPressCount.toLocaleString();
+    clickCountEl.textContent = stats.mouseClickCount.toLocaleString();
+    
+    // Change Meowchi's expression based on activity
+    if (stats.totalActions > 0 && stats.totalActions % 50 === 0) {
+      // Every 50 actions, make Meowchi happy
+      meowchiSprite.textContent = '😻';
+      setTimeout(() => {
+        meowchiSprite.textContent = catEmojis[currentEmojiIndex];
+      }, 2000);
+    }
+  }
+}
+
+// Initialize input tracking
+async function initializeTracking() {
+  const isAvailable = await checkInputTracking();
+  
+  if (isAvailable && window.meowchiAPI) {
+    // Get initial stats
+    const initialStats = await window.meowchiAPI.getInputStats();
+    updateStats(initialStats);
+    
+    // Listen for updates
+    window.meowchiAPI.onInputStatsUpdate((stats) => {
+      updateStats(stats);
+    });
+  }
+}
+
+// Start tracking when page loads
+initializeTracking();

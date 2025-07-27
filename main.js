@@ -1,13 +1,15 @@
-const { app, BrowserWindow } = require('electron');
+const { app, BrowserWindow, ipcMain } = require('electron');
 const path = require('path');
+const InputTracker = require('./logic/inputTracker');
 
 let mainWindow;
+let inputTracker;
 
 function createWindow() {
   // Create the browser window with specific properties for floating pet
   mainWindow = new BrowserWindow({
-    width: 150,
-    height: 150,
+    width: 180,
+    height: 180,
     x: 100, // Initial position, can be adjusted
     y: 100,
     transparent: true, // Enable transparency
@@ -46,11 +48,27 @@ function createWindow() {
 }
 
 // This method will be called when Electron has finished initialization
-app.whenReady().then(createWindow);
+app.whenReady().then(async () => {
+  createWindow();
+  
+  // Initialize input tracker
+  inputTracker = new InputTracker();
+  const initialized = await inputTracker.initialize();
+  
+  if (initialized) {
+    inputTracker.start();
+    console.log('Meowchi input tracking active!');
+  } else {
+    console.warn('Input tracking not available on this platform');
+  }
+});
 
 // Quit when all windows are closed
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
+    if (inputTracker) {
+      inputTracker.stop();
+    }
     app.quit();
   }
 });
