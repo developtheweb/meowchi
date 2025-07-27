@@ -1,0 +1,52 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: transparent;
+  -webkit-app-region: drag; /* Allow dragging the window */
+  user-select: none;
+}
+
+#meowchi-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+#meowchi-sprite {
+  font-size: 80px;
+  cursor: pointer;
+  -webkit-app-region: no-drag; /* Allow clicking on the sprite */
+  animation: float 3s ease-in-out infinite;
+  filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.3));
+}
+
+/* Simple floating animation */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+/* Hover effect */
+#meowchi-sprite:hover {
+  transform: scale(1.1);
+  animation-play-state: paused;
+}
+
+/* Click feedback */
+#meowchi-sprite:active {
+  transform: scale(0.95);
+}
