@@ -114,6 +114,11 @@ class InputTracker {
     windows.forEach(window => {
       window.webContents.send('input-stats-update', this.getStats());
     });
+    
+    // Notify pet state about activity (for cleanliness decay)
+    if (global.petState) {
+      global.petState.onActivity();
+    }
   }
 
   reset() {

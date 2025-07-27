@@ -9,6 +9,13 @@
 <body>
   <div id="meowchi-container">
     <div id="meowchi-sprite">🐱</div>
+    
+    <!-- Pet Status Indicator -->
+    <div id="pet-status" class="hidden">
+      <span id="status-text">I'm happy!</span>
+    </div>
+    
+    <!-- Input Stats -->
     <div id="stats-overlay">
       <div class="stat-item">
         <span class="stat-icon">⌨️</span>
@@ -17,6 +24,39 @@
       <div class="stat-item">
         <span class="stat-icon">🖱️</span>
         <span id="click-count">0</span>
+      </div>
+    </div>
+    
+    <!-- Pet State Panel (shown on hover/click) -->
+    <div id="pet-panel" class="hidden">
+      <div class="pet-stat">
+        <span class="stat-label">🍔 Hunger</span>
+        <div class="stat-bar">
+          <div id="hunger-bar" class="stat-fill hunger-fill"></div>
+        </div>
+        <span id="hunger-value" class="stat-value">80%</span>
+      </div>
+      
+      <div class="pet-stat">
+        <span class="stat-label">🧼 Clean</span>
+        <div class="stat-bar">
+          <div id="cleanliness-bar" class="stat-fill cleanliness-fill"></div>
+        </div>
+        <span id="cleanliness-value" class="stat-value">80%</span>
+      </div>
+      
+      <div class="pet-stat">
+        <span class="stat-label">😊 Mood</span>
+        <div class="stat-bar">
+          <div id="mood-bar" class="stat-fill mood-fill"></div>
+        </div>
+        <span id="mood-value" class="stat-value">80%</span>
+      </div>
+      
+      <div class="pet-actions">
+        <button id="feed-btn" class="action-btn">🍔 Feed</button>
+        <button id="clean-btn" class="action-btn">🧼 Clean</button>
+        <button id="play-btn" class="action-btn">🎮 Play</button>
       </div>
     </div>
   </div>
