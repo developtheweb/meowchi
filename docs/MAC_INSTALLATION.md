@@ -2,6 +2,8 @@
 
 ## Installing Meowchi on macOS
 
+Meowchi supports both Intel and Apple Silicon Macs (M1/M2/M3). The app is built as a universal binary that runs natively on both architectures.
+
 When you download and open the Meowchi DMG file, you may encounter security warnings because the app isn't signed with an Apple Developer certificate.
 
 ### Method 1: Right-Click to Open (Recommended)
