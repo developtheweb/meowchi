@@ -31,7 +31,7 @@ process.on('unhandledRejection', (reason, promise) => {
 function createWindow() {
   // Create the browser window with specific properties for floating pet
   mainWindow = new BrowserWindow({
-    width: 250,
+    width: 420,
     height: 250,
     x: 100, // Initial position, can be adjusted
     y: 100,
